@@ -148,8 +148,74 @@ void cicloSTA()
 }
 
 //ADD = sumar al acumulador
+void cicloADD()
+{
+	//Selecciona el tipo de direccionamiento para ejecutar ciclos distintos
+	switch (lIR.getTD())
+	{
+		//Direccionamiento inmediato
+	case 0:
+		iACC = iACC + lIR.getDIR();
+		break;
+		//Direccionamiento Relativo
+	case 1:
+		iMAR = lIR.getDIR() + iPC;
+		lMDR = mmRead();
+		iACC = iACC + lMDR.getDIR();
+		break;
+		//Direccionamiento Absoluto
+	case 2:
+		iMAR = lIR.getDIR();
+		lMDR = mmRead();
+		iACC = iACC + lMDR.getDIR();
+		break;
+		//Direccionamiento Indirecto
+	case 3:
+		iMAR = lIR.getDIR();
+		lMDR = mmRead();
+		iMAR = lMDR.getDIR();
+		lMDR = mmRead();
+		iACC = iACC + lMDR.getDIR();
+		break;
+	default:
+		break;
+	}
+}
 
 //SUB = restar al acumulador
+void cicloSUB()
+{
+	//Selecciona el tipo de direccionamiento para ejecutar ciclos distintos
+	switch (lIR.getTD())
+	{
+		//Direccionamiento inmediato
+	case 0:
+		iACC = iACC - lIR.getDIR();
+		break;
+		//Direccionamiento Relativo
+	case 1:
+		iMAR = lIR.getDIR() + iPC;
+		lMDR = mmRead();
+		iACC = iACC - lMDR.getDIR();
+		break;
+		//Direccionamiento Absoluto
+	case 2:
+		iMAR = lIR.getDIR();
+		lMDR = mmRead();
+		iACC = iACC - lMDR.getDIR();
+		break;
+		//Direccionamiento Indirecto
+	case 3:
+		iMAR = lIR.getDIR();
+		lMDR = mmRead();
+		iMAR = lMDR.getDIR();
+		lMDR = mmRead();
+		iACC = iACC - lMDR.getDIR();
+		break;
+	default:
+		break;
+	}
+}
 
 //JMP = salto a otra dirección de memoria
 
