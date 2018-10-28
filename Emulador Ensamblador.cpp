@@ -218,12 +218,56 @@ void cicloSUB()
 }
 
 //JMP = salto a otra dirección de memoria
+void cicloJMP()
+{
+	//Selecciona el tipo de direccionamiento para ejecutar ciclos distintos
+	switch (lIR.getTD())
+	{
+	//Direccionamiento Relativo
+	case 1:
+		iPC = iPC + lIR.getDIR();
+		break;
+	//Direccionamiento Absoluto
+	case 2:
+		iPC = lIR.getDIR();
+		break;
+	//Direccionamiento Indirecto
+	case 3:
+		iMAR = lIR.getDIR();
+		lMDR = mmRead();
+		iPC = lMDR.getDIR();
+		break;
+	default:
+		break;
+	}
+}
 
 //JMZ = salto si la bandera es cero
+void cicloJMZ()
+{
+	if (iFR == 1)
+	{
+		cicloJMP();
+	}
+}
 
 //JMN = salto si la bandera es negativa
+void cicloJMN()
+{
+	if (iFR == 2)
+	{
+		cicloJMP();
+	}
+}
 
 //JMV = salto si la bandera es overflow
+void cicloJMV()
+{
+	if (iFR == 3)
+	{
+		cicloJMP();
+	}
+}
 
 //HLT = detiene la ejecución del programa
 
