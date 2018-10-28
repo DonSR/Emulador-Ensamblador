@@ -2,6 +2,8 @@
 
 #include "pch.h"
 #include <iostream>
+#include <thread>
+#include <string>
 
 using namespace std;
 
@@ -42,9 +44,8 @@ private:
 
 //Variables globales que corresponden a cada uno de los registros de la computadora
 
-int iPC, iMAR, iACC;
+int iPC, iMAR, iACC, iFR;
 Linea lIR, lMDR, lInstrucciones[1000];
-char cFR;
 
 //Función para hacer main memory read
 Linea mmRead()
@@ -67,7 +68,11 @@ void cicloFetch()
 	lIR = lMDR;
 }
 
-//NOP = no operación
+//NOP = no operación, se hace un delay de 1 segundo para demostrar que no se hizo una operación (tiempo exagerado)
+void cicloNOP()
+{
+	std::this_thread::sleep_for(1s);
+}
 
 //CLA = limpiar acumuldor
 void cicloCLA()
@@ -270,10 +275,22 @@ void cicloJMV()
 }
 
 //HLT = detiene la ejecución del programa
+void cicloHLT()
+{
+	Linea end;
+	end.setCOP = 999;
+	end.setDIR = 999;
+	end.setTD = 999;
+	lInstrucciones[iPC] = end;
+}
 
 int main()
 {
-
+	string sLinea{ "" };
+	cout << "Introduce tu codigo de ensamblador con el siguiente formato \"COP,TD,DIR\"" << endl;
+	while (sLinea != "HLT")
+	{
+		cin >> sLinea;
+	}
 	return 0;
 }
-
