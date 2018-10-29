@@ -279,7 +279,6 @@ void cicloJMV()
 		cicloJMP();
 	}
 }
-
 //Seleciona el ciclo a Ejecutar
 void elegirCiclo()
 {
